@@ -1,0 +1,24 @@
+{
+  "name": "inlamningsuppgift-1-jensengbg-jack-carling",
+  "version": "1.0.0",
+  "description": "## Instruktioner",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FRK20G/inlamningsuppgift-1-jensengbg-jack-carling.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FRK20G/inlamningsuppgift-1-jensengbg-jack-carling/issues"
+  },
+  "homepage": "https://github.com/FRK20G/inlamningsuppgift-1-jensengbg-jack-carling#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0"
+  }
+}

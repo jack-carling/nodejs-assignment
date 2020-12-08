@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+// Hämta alla produkter i varukorgen
 router.get('/', (request, response) => {
   const data = request.app.database.get('cart').value();
   response.send(data);
 });
 
+// Lägga till en produkt i varukorgen, kollar om ID:et är giltigt först
 router.post('/', (request, response) => {
   const id = Number(request.query.id);
   if (!isNaN(id)) {
@@ -17,6 +19,7 @@ router.post('/', (request, response) => {
   }
 });
 
+// För att ändra antalet av en produkt i varukorgen, kollar om ID:et är giltigt först
 router.put('/:change', (request, response) => {
   const change = request.params.change;
   const id = Number(request.query.id);
@@ -29,6 +32,7 @@ router.put('/:change', (request, response) => {
   }
 });
 
+// För att ta bort en produkt från varukorgen, kollar om ID:et är giltigt först
 router.delete('/', (request, response) => {
   const id = Number(request.query.id);
   if (!isNaN(id)) {
@@ -40,6 +44,11 @@ router.delete('/', (request, response) => {
   }
 });
 
+/*
+Funktion för att lägga till produkt i varukorg från databas
+Kollar först om produkten existerar i databasen
+Kontrollerar sedan att användaren inte redan har produkten i varukorgen
+*/
 function addToCart(database, id) {
   const product = database.get('products').find({id: id}).value();
   if (product !== undefined) {
@@ -55,6 +64,13 @@ function addToCart(database, id) {
   }
 }
 
+/*
+Funktion för att uppdatera antalet av en produkt i varukorgen
+Kontrollerar först om produkten ligger i varukorgen
+Sedan om parametern är för att öka eller minska antalet
+Modifierar count om antalet är mellan 1-99
+Går alltså inte att ha färre än 1 produkt eller fler än 99 i varukorgen
+*/
 function updateCart(database, id, change) {
   const product = database.get('cart').find({id: id}).value();
   if (product !== undefined) {
@@ -78,6 +94,11 @@ function updateCart(database, id, change) {
   }
 }
 
+/*
+Funktion för att ta bort från varukorgen
+Kontrollerar först om produkten ligger i varukorgen
+Tar därefter bort produkten
+*/
 function removeFromCart(database, id) {
   const item = database.get('cart').find({id: id}).value();
   if (item !== undefined) {

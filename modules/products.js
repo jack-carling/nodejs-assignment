@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+/*
+Hämtar alla produkter i databasen
+Om sortby=price är inkluderat så kommer den hämta alla efter pris
+*/
 router.get('/', (request, response) => {
   const sortBy = request.query.sortby;
   const database = request.app.database;

@@ -162,20 +162,5 @@
       "img": "/img/wheat.jpg"
     }
   ],
-  "cart": [
-    {
-      "id": 14,
-      "name": "Pineapple",
-      "price": 60,
-      "count": 99,
-      "img": "/img/pineapple.jpg"
-    },
-    {
-      "id": 5,
-      "name": "Coffee beans",
-      "price": 21,
-      "count": 1,
-      "img": "/img/coffee_beans.jpg"
-    }
-  ]
+  "cart": []
 }

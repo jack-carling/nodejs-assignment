@@ -20,15 +20,15 @@ router.post('/', (request, response) => {
 });
 
 // För att ändra antalet av en produkt i varukorgen, kollar om ID:et är giltigt först
-router.put('/:change', (request, response) => {
-  const change = request.params.change;
+router.put('/', (request, response) => {
   const id = Number(request.query.id);
-  if (!isNaN(id)) {
+  const count = Number(request.query.count);
+  if (!isNaN(id)&&!isNaN(count)) {
     const database = request.app.database;
-    const data = updateCart(database, id, change);
+    const data = updateCart(database, id, count);
     response.json(data);
   } else {
-    response.json({success: false, message: 'Error: ID is not a number or missing'});
+    response.json({success: false, message: 'Error: ID and/or count is not a number or missing'});
   }
 });
 
@@ -54,7 +54,13 @@ function addToCart(database, id) {
   if (product !== undefined) {
       const productInCart = database.get('cart').find({id: id}).value();
     if (productInCart === undefined) {
-      database.get('cart').push(product).write();
+      database.get('cart').push({
+                                  id: product.id,
+                                  name: product.name,
+                                  price: product.price,
+                                  img: product.img,
+                                  count: 1
+                                }).write();
       return {success: true, message: 'Item added to cart'};
     } else {
       return {success: false, message: 'Error: Item already in cart'};
@@ -67,27 +73,22 @@ function addToCart(database, id) {
 /*
 Funktion för att uppdatera antalet av en produkt i varukorgen
 Kontrollerar först om produkten ligger i varukorgen
-Sedan om parametern är för att öka eller minska antalet
 Modifierar count om antalet är mellan 1-99
 Går alltså inte att ha färre än 1 produkt eller fler än 99 i varukorgen
+Måste vara ett tal utan decimaler
 */
-function updateCart(database, id, change) {
+function updateCart(database, id, count) {
   const product = database.get('cart').find({id: id}).value();
   if (product !== undefined) {
-    if (change === 'decrease' && product.count > 1) {
-      const newCount = product.count - 1;
-      database.get('cart').find({id: id}).assign({count: newCount}).write();
-      return {success: true, message: 'Item count decreased'};
-    } else if (change === 'increase' && product.count < 99) {
-      const newCount = product.count + 1;
-      database.get('cart').find({id: id}).assign({count: newCount}).write();
-      return {success: true, message: 'Item count increased'};
-    } else {
-      if (change !== 'increase' && change !== 'decrease') {
-        return {success: false, message: 'Error: Invalid parameter'};
+    if (Number.isInteger(count)) {
+      if (count >= 1 && count <= 99) {
+        database.get('cart').find({id: id}).assign({count: count}).write();
+        return {success: true, message: 'Item count altered'};
       } else {
-        return {success: false, message: 'Error: Item count cannot be less than 1 or more than 99'};
+        return {success: false, message: 'Error: Count can only be between 1-99'};
       }
+    } else {
+      return {success: false, message: 'Error: Count is not an integer'};
     }
   } else {
     return {success: false, message: 'Error: Item is not in cart'};

@@ -1,5 +1,6 @@
 const express = require('express');
 const lowdb = require('lowdb');
+const cors = require('cors');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('database.json');
 const database = new lowdb(adapter);
@@ -8,11 +9,7 @@ const port = process.env.PORT || 8080;
 const cart = require('./modules/cart');
 const products = require('./modules/products');
 
-// För att fetch ska fungera via VSCode live-server
-app.use((request, response, next) => {
-  response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-  next();
-});
+app.use(cors());
 
 // För bilder på servern
 app.use(express.static('server'));

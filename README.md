@@ -17,7 +17,7 @@ Node.JS-applikation för en e-handelssida.
     * Query *id* (krävs) - skicka tillbaka samma id som hämtades från products för att lägga till i varukorg
     * T.ex. /api/cart?id=3
     * Felmeddelanden:
-        * ID is not a number or missing. | ID:et skickades inte med eller är felformaterat
+        * ID is not a number or missing | ID:et skickades inte med eller är felformaterat
         * Item does not exist | ID:et saknas i databasen, alltså finns ingen produkt med det ID:et
         * Item already in cart | Produkten finns redan i varukorgen, kan inte läggas till fler än 1 gång
         * Returnerar success: false vid fel
@@ -26,19 +26,19 @@ Node.JS-applikation för en e-handelssida.
     * Query *id* (krävs) - skicka tillbaka samma id som hämtades från products för att ta bort från varukorg
     * T.ex. /api/cart?id=3
     * Felmeddelanden:
-        * ID is not a number or missing. | ID:et skickades inte med eller är felformaterat
+        * ID is not a number or missing | ID:et skickades inte med eller är felformaterat
         * Item is not in cart | Produkten finns inte i varukorgen och kan inte tas bort
         * Returnerar success: false vid fel
     * Item has been removed from cart | success: true | Allting gick som det ska
-* **PUT** - /api/cart/*param* - uppdaterar *count* i produkt i varukorgen - alltså antalet av en produkt som ska köpas
-    * Param *increase/decrease* + query *id* (krävs) - för att öka/minska antalet av en produkt
-    * T.ex. /api/cart/increase?id=17 - ökar count i produkten med id 17 med 1
-    * T.ex. /api/cart/decrease?id=9 - minskar count i produkten med id 9 med 1
-    * Fungerar mellan 1-99, färre än 1 och fler än 99 av samma produkt går inte att ha i varukorgen
+* **PUT** - /api/cart - uppdaterar *count* i produkt i varukorgen - alltså antalet av en produkt som ska köpas
+    * Query *id* + query *count* (krävs båda) - för att öka/minska antalet av en produkt
+    * T.ex. /api/cart/?id=17&count=37 - ändrar count i produkten med id 17 till 37
+    * T.ex. /api/cart/?id=9&count=1 - ändrar count i produkten med id 9 till 1 (lägsta)
+    * Fungerar endast med heltal mellan 1-99, färre än 1 och fler än 99 av samma produkt går inte att ha i varukorgen
     * Felmeddelanden:
-        * ID is not a number or missing. | ID:et skickades inte med eller är felformaterat
+        * Error: ID and/or count is not a number or missing | ID:et och/eller count skickades inte med eller är felformaterat
         * Item is not in cart | Produkten finns inte i varukorgen och kan inte ändras
-        * Invalid parameter | increase / decrease saknas eller är felformaterat
-        * Item count cannot be less than 1 or more than 99 | Fel vid ändring om värdet försöker minska 1 eller öka 99
+        * Count is not an integer | Count måste vara ett tal utan decimaler
+        * Count can only be between 1-99 | Count måste vara ett tal mellan 1-99
         * Returnerar success: false vid fel
-    * Item count increased / decreased | success: true | Allting gick som det ska
+    * Item count altered | success: true | Allting gick som det ska

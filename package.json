@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/FRK20G/inlamningsuppgift-1-jensengbg-jack-carling#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "lowdb": "^1.0.0"
   }

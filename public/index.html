@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Food Court</title>
+</head>
+<body>
+<section class="body">
+<header>
+  <h1>FOOD COURT</h1>
+  <i class="material-icons">restaurant</i>
+</header>
+  <main>
+    <article class="menu">
+      <div class="search"><input type="text" placeholder="Search" id="search-input" autocomplete="off"><i class="material-icons" id="search-button">search</i></div>
+      <div class="cart"><span id="cart-count">0</span><i class="material-icons">shopping_cart</i></div>
+    </article>
+    <article class="search-text">
+      <span id="search-result"></span>
+      <span id="search-info">Showing all products</span>
+      <span class="break">Sort by: <a id="sortbyname" class="selected">name</a> | <a id="sortbyprice">price</a></span>
+    </article>
+    <section class="products"></section>
+  </main>
+  <footer>&copy; 2020</footer>
+</section>
+<section class="overlay--banner hide">
+  <div class="overlay--banner-container">
+    <span id="overlay--banner-text"></span>
+    <article class="count">
+      <input type="number" min="1" max="99" id="overlay--banner-count">
+    </article>
+    <span class="remove">Remove from cart</span>
+    <i class="material-icons close" id="close-banner">cancel</i>
+  </div>
+</section>
+<section class="overlay--wrapper">
+  <span id="overlay--wrapper-text"></span>
+</section>
+<section class="overlay--cart hide">
+  <div class="overlay--cart-container">
+    <i class="material-icons close" id="close-cart">cancel</i>
+    <div class="list-header"><h1>CART</h1><span id="total"></span></div>
+    <div class="list">
+      <ul id="list">
+      </ul>
+    </div>
+  </div>
+</section>
+<script src="js/script.js"></script>
+</body>
+</html>

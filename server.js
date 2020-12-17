@@ -12,11 +12,14 @@ const products = require('./modules/products');
 app.use(cors());
 
 // För bilder på servern
-app.use(express.static('server'));
+app.use(express.static('private'));
+
+// För klienten
+app.use(express.static('public'));
 
 // Moduler är uppdelade på förfrågningar som rör produkter/varukorgen
 app.database = database;
 app.use('/api/cart', cart);
 app.use('/api/products', products);
 
-app.listen(port);
+app.listen(port, () => console.log(`Server started on port ${port}`));
